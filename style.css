@@ -1,0 +1,713 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+	background-color: #f5f5f5;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem;
+}
+
+h1 {
+	margin-bottom: 1rem;
+	color: #333;
+	text-align: center;
+}
+
+.control-panel {
+	background-color: white;
+	padding: 1.5rem;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	width: 100%;
+	max-width: 800px;
+	margin-bottom: 2rem;
+}
+
+.control-panel h2 {
+	margin-bottom: 1rem;
+	font-size: 1.5rem;
+	color: #333;
+}
+
+.control-panel-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.5rem;
+}
+
+.selection-group {
+	margin-bottom: 1.5rem;
+}
+
+.selection-group h3 {
+	margin-bottom: 0.5rem;
+	font-size: 1.1rem;
+	color: #555;
+}
+
+.options-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 0.5rem;
+}
+
+.option-btn {
+	padding: 0.5rem;
+	background-color: #eee;
+	border: 2px solid transparent;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.2s;
+	text-align: center;
+}
+
+.option-btn:hover {
+	background-color: #e0e0e0;
+}
+
+.option-btn.selected {
+	border-color: #4285f4;
+	background-color: #e8f0fe;
+}
+
+.random-toggle {
+	display: flex;
+	align-items: center;
+	margin-top: 1rem;
+}
+
+.random-toggle input {
+	margin-right: 0.5rem;
+}
+
+.action-buttons {
+	display: flex;
+	gap: 1rem;
+	margin-top: 1.5rem;
+}
+
+.action-btn {
+	padding: 0.75rem 1.5rem;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.2s;
+}
+
+.create-btn {
+	background-color: #4285f4;
+	color: white;
+}
+
+.create-btn:hover {
+	background-color: #3367d6;
+}
+
+.clear-btn {
+	background-color: #f44336;
+	color: white;
+}
+
+.clear-btn:hover {
+	background-color: #d32f2f;
+}
+
+.toast-container {
+	position: fixed;
+	z-index: 9999;
+	top: 20px;
+	right: 20px;
+	max-width: 350px;
+	width: 100%;
+}
+
+.toast {
+	position: relative;
+	margin-bottom: 1rem;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	display: flex;
+	align-items: center;
+	padding: 16px;
+}
+
+.toast-icon {
+	margin-right: 16px;
+	font-size: 1.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	flex-shrink: 0;
+}
+
+.toast-content {
+	flex-grow: 1;
+}
+
+.toast-title {
+	font-weight: bold;
+	margin-bottom: 4px;
+	font-size: 0.9rem;
+}
+
+.toast-message {
+	font-size: 0.75rem;
+}
+
+.toast-progress {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 4px;
+	width: 100%;
+	transform-origin: left;
+}
+
+.toast-close {
+	background: none;
+	border: none;
+	color: inherit;
+	cursor: pointer;
+	font-size: 1.2rem;
+	opacity: 0.7;
+	transition: opacity 0.2s;
+	padding: 4px;
+	margin-left: 8px;
+}
+
+.toast-close:hover {
+	opacity: 1;
+}
+
+/* Toast Styles */
+/* Style 1: Sass Master */
+.toast-style-1 {
+	background-color: #ff5252;
+	color: white;
+}
+
+.toast-style-1 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-1 .toast-progress {
+	background-color: #ff1744;
+}
+
+/* Style 2: Blue Steel */
+.toast-style-2 {
+	background-color: #2962ff;
+	color: white;
+}
+
+.toast-style-2 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-2 .toast-progress {
+	background-color: #0039cb;
+}
+
+/* Style 3: Toxic Green */
+.toast-style-3 {
+	background-color: #00c853;
+	color: white;
+}
+
+.toast-style-3 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-3 .toast-progress {
+	background-color: #009624;
+}
+
+/* Style 4: Dark Mode */
+.toast-style-4 {
+	background-color: #212121;
+	color: #e0e0e0;
+}
+
+.toast-style-4 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.toast-style-4 .toast-progress {
+	background-color: #484848;
+}
+
+/* Style 5: Royal Purple */
+.toast-style-5 {
+	background-color: #6200ea;
+	color: white;
+}
+
+.toast-style-5 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-5 .toast-progress {
+	background-color: #3700b3;
+}
+
+/* Style 6: Sunset Orange */
+.toast-style-6 {
+	background-color: #ff6d00;
+	color: white;
+}
+
+.toast-style-6 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-6 .toast-progress {
+	background-color: #c43c00;
+}
+
+/* Style 7: Cyber Pink */
+.toast-style-7 {
+	background-color: #d500f9;
+	color: white;
+}
+
+.toast-style-7 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-7 .toast-progress {
+	background-color: #9e00c5;
+}
+
+/* Style 8: Business Gray */
+.toast-style-8 {
+	background-color: #757575;
+	color: white;
+}
+
+.toast-style-8 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-8 .toast-progress {
+	background-color: #494949;
+}
+
+/* Style 9: Teal Deal */
+.toast-style-9 {
+	background-color: #009688;
+	color: white;
+}
+
+.toast-style-9 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-9 .toast-progress {
+	background-color: #00675b;
+}
+
+/* Style 10: Gradient Glory */
+.toast-style-10 {
+	background: linear-gradient(45deg, #ff6b6b, #6b47ff);
+	color: white;
+}
+
+.toast-style-10 .toast-icon {
+	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.toast-style-10 .toast-progress {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Animations */
+/* Animation 1: Slide Right */
+@keyframes slideRight {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideRightOut {
+	to {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+}
+
+.toast-animation-1-in {
+	animation: slideRight 0.4s ease-out forwards;
+}
+
+.toast-animation-1-out {
+	animation: slideRightOut 0.4s ease-in forwards;
+}
+
+/* Animation 2: Fade */
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
+.toast-animation-2-in {
+	animation: fade 0.4s ease-out forwards;
+}
+
+.toast-animation-2-out {
+	animation: fadeOut 0.4s ease-in forwards;
+}
+
+/* Animation 3: Bounce */
+@keyframes bounce {
+	0% {
+		transform: scale(0.5);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(1.05);
+		opacity: 0.8;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes bounceOut {
+	0% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.05);
+		opacity: 0.8;
+	}
+	100% {
+		transform: scale(0.5);
+		opacity: 0;
+	}
+}
+
+.toast-animation-3-in {
+	animation: bounce 0.5s ease-out forwards;
+}
+
+.toast-animation-3-out {
+	animation: bounceOut 0.5s ease-in forwards;
+}
+
+/* Animation 4: Slide Top */
+@keyframes slideTop {
+	from {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideTopOut {
+	to {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+}
+
+.toast-animation-4-in {
+	animation: slideTop 0.4s ease-out forwards;
+}
+
+.toast-animation-4-out {
+	animation: slideTopOut 0.4s ease-in forwards;
+}
+
+/* Animation 5: Flip */
+@keyframes flip {
+	from {
+		transform: perspective(400px) rotateX(-90deg);
+		opacity: 0;
+	}
+	to {
+		transform: perspective(400px) rotateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes flipOut {
+	to {
+		transform: perspective(400px) rotateX(90deg);
+		opacity: 0;
+	}
+}
+
+.toast-animation-5-in {
+	animation: flip 0.5s ease-out forwards;
+	transform-origin: top center;
+}
+
+.toast-animation-5-out {
+	animation: flipOut 0.5s ease-in forwards;
+	transform-origin: top center;
+}
+
+/* Animation 6: Zoom */
+@keyframes zoom {
+	from {
+		transform: scale(0);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes zoomOut {
+	to {
+		transform: scale(0);
+		opacity: 0;
+	}
+}
+
+.toast-animation-6-in {
+	animation: zoom 0.4s ease-out forwards;
+}
+
+.toast-animation-6-out {
+	animation: zoomOut 0.4s ease-in forwards;
+}
+
+/* Animation 7: Slide Left */
+@keyframes slideLeft {
+	from {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
+
+@keyframes slideLeftOut {
+	to {
+		transform: translateX(-100%);
+		opacity: 0;
+	}
+}
+
+.toast-animation-7-in {
+	animation: slideLeft 0.4s ease-out forwards;
+}
+
+.toast-animation-7-out {
+	animation: slideLeftOut 0.4s ease-in forwards;
+}
+
+/* Animation 8: Rotate */
+@keyframes rotate {
+	from {
+		transform: rotate(-90deg);
+		opacity: 0;
+	}
+	to {
+		transform: rotate(0);
+		opacity: 1;
+	}
+}
+
+@keyframes rotateOut {
+	to {
+		transform: rotate(90deg);
+		opacity: 0;
+	}
+}
+
+.toast-animation-8-in {
+	animation: rotate 0.5s ease-out forwards;
+	transform-origin: top left;
+}
+
+.toast-animation-8-out {
+	animation: rotateOut 0.5s ease-in forwards;
+	transform-origin: top left;
+}
+
+/* Animation 9: Jello */
+@keyframes jello {
+	0% {
+		transform: scale3d(1, 1, 1);
+		opacity: 0;
+	}
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+		opacity: 0.5;
+	}
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+		opacity: 0.7;
+	}
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+		opacity: 0.8;
+	}
+	65% {
+		transform: scale3d(0.95, 1.05, 1);
+		opacity: 0.9;
+	}
+	75% {
+		transform: scale3d(1.05, 0.95, 1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+		opacity: 1;
+	}
+}
+
+@keyframes jelloOut {
+	0% {
+		transform: scale3d(1, 1, 1);
+		opacity: 1;
+	}
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+		opacity: 0.8;
+	}
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+		opacity: 0.6;
+	}
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+		opacity: 0.4;
+	}
+	65% {
+		transform: scale3d(0.95, 1.05, 1);
+		opacity: 0.2;
+	}
+	75% {
+		transform: scale3d(1.05, 0.95, 1);
+		opacity: 0.1;
+	}
+	100% {
+		transform: scale3d(1, 1, 1);
+		opacity: 0;
+	}
+}
+
+.toast-animation-9-in {
+	animation: jello 0.8s ease-out forwards;
+}
+
+.toast-animation-9-out {
+	animation: jelloOut 0.8s ease-in forwards;
+}
+
+/* Animation 10: Swing */
+@keyframes swing {
+	0% {
+		transform: rotate(0deg);
+		opacity: 0;
+	}
+	20% {
+		transform: rotate(15deg);
+		opacity: 0.4;
+	}
+	40% {
+		transform: rotate(-10deg);
+		opacity: 0.6;
+	}
+	60% {
+		transform: rotate(5deg);
+		opacity: 0.8;
+	}
+	80% {
+		transform: rotate(-5deg);
+		opacity: 0.9;
+	}
+	100% {
+		transform: rotate(0deg);
+		opacity: 1;
+	}
+}
+
+@keyframes swingOut {
+	0% {
+		transform: rotate(0deg);
+		opacity: 1;
+	}
+	20% {
+		transform: rotate(15deg);
+		opacity: 0.8;
+	}
+	40% {
+		transform: rotate(-10deg);
+		opacity: 0.6;
+	}
+	60% {
+		transform: rotate(5deg);
+		opacity: 0.4;
+	}
+	80% {
+		transform: rotate(-5deg);
+		opacity: 0.2;
+	}
+	100% {
+		transform: rotate(0deg);
+		opacity: 0;
+	}
+}
+
+.toast-animation-10-in {
+	animation: swing 0.8s ease-out forwards;
+	transform-origin: top center;
+}
+
+.toast-animation-10-out {
+	animation: swingOut 0.8s ease-in forwards;
+	transform-origin: top center;
+}
+
+/* Animation for progress bar */
+@keyframes progress {
+	from {
+		transform: scaleX(1);
+	}
+	to {
+		transform: scaleX(0);
+	}
+}
+
+.toast-progress-animate {
+	animation: progress 10s linear forwards;
+}
