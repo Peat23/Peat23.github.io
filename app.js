@@ -1,245 +1,235 @@
-// Toast messages with cocky attitude
-const cockyMessages = [
-	{
-		title: "Task Complete",
-		message: "I just did in 5 seconds what would take you all day. You're welcome.",
-		icon: "🚀"
-	},
-	{
-		title: "Update Available",
-		message: "Your system is out of date. Like, seriously outdated. Even my grandma has a newer version.",
-		icon: "🔄"
-	},
-	{
-		title: "Error Detected",
-		message: "Found an error in your code. Don't worry, happens to beginners all the time.",
-		icon: "❌"
-	},
-	{
-		title: "File Saved",
-		message: "I've saved your file. Next time try not to wait until the last minute.",
-		icon: "💾"
-	},
-	{
-		title: "Connection Lost",
-		message: "WiFi dropped. Have you tried turning it off and on again? Classic solution for classics like you.",
-		icon: "📶"
-	},
-	{
-		title: "New Message",
-		message: "Someone actually messaged you. Must be your lucky day.",
-		icon: "✉️"
-	},
-	{
-		title: "Battery Low",
-		message: "Your battery is dying. Kind of like your productivity today.",
-		icon: "🔋"
-	},
-	{
-		title: "Download Complete",
-		message: "File downloaded in record time. Your internet must be having a good day.",
-		icon: "📥"
-	},
-	{
-		title: "Account Secured",
-		message: "Your account is now secure. Unlike your fashion choices.",
-		icon: "🔒"
-	},
-	{
-		title: "Settings Updated",
-		message: "Settings updated to optimal. You can thank me later.",
-		icon: "⚙️"
-	},
-	{
-		title: "Upload Failed",
-		message: "Your upload failed. The internet rejected your file. Can't say I blame it.",
-		icon: "⚠️"
-	},
-	{
-		title: "Package Delivered",
-		message: "Your package arrived. Another thing you ordered but don't need.",
-		icon: "📦"
-	},
-	{
-		title: "Calendar Reminder",
-		message: "Meeting in 5 minutes. Bet you forgot all about it.",
-		icon: "📅"
-	},
-	{
-		title: "Profile Updated",
-		message: "Profile updated. The new photo can't fix everything, but it's a start.",
-		icon: "👤"
-	},
-	{
-		title: "Login Successful",
-		message: "You're in! Surprised you remembered your password this time.",
-		icon: "🔑"
-	}
-];
+const showForm = document.querySelector('#showForm');
+const taskForm = document.querySelector('#taskForm');
+const taskList = document.querySelector('#taskList');
+const btnCloseForm = document.querySelector("#closeForm");
 
-document.addEventListener('DOMContentLoaded', function() {
-	// Elements
-	const toastContainer = document.getElementById('toast-container');
-	const createToastBtn = document.getElementById('create-toast');
-	const clearToastsBtn = document.getElementById('clear-toasts');
-	const randomStyleToggle = document.getElementById('random-style');
-	const randomAnimationToggle = document.getElementById('random-animation');
-	const styleOptions = document.querySelectorAll('.style-option');
-	const animationOptions = document.querySelectorAll('.animation-option');
+document.addEventListener("DOMContentLoaded", () => { // When the DOM is loaded, check if there are tasks in localStorage
+  if (localStorage.getItem('tasks')) {
+    showTasks();
+  }
+})
 
-	// Variables
-	let selectedStyle = "1";
-	let selectedAnimation = "1";
-
-	// Functions
-	function selectStyle(style) {
-		styleOptions.forEach(option => {
-			if (option.dataset.style === style) {
-				option.classList.add('selected');
-			} else {
-				option.classList.remove('selected');
-			}
-		});
-		selectedStyle = style;
-	}
-
-	function selectAnimation(animation) {
-		animationOptions.forEach(option => {
-			if (option.dataset.animation === animation) {
-				option.classList.add('selected');
-			} else {
-				option.classList.remove('selected');
-			}
-		});
-		selectedAnimation = animation;
-	}
-
-	function getRandomStyle() {
-		const styles = Array.from({length: 10}, (_, i) => (i + 1).toString());
-		const randomStyle = styles[Math.floor(Math.random() * styles.length)];
-
-		// Remove 'selected' class from all style options
-		document.querySelectorAll('.style-option').forEach(option => {
-			option.classList.remove('selected');
-		});
-
-		// Add 'selected' class to the randomly chosen style option
-		const selectedOption = document.querySelector(`.style-option[data-style="${randomStyle}"]`);
-		if (selectedOption) {
-			selectedOption.classList.add('selected');
-		}
-		
-		return randomStyle;
-	}
-
-	function getRandomAnimation() {
-		const animations = Array.from({length: 10}, (_, i) => (i + 1).toString());
-		const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
-
-		// Remove 'selected' class from all animation options
-		document.querySelectorAll('.animation-option').forEach(option => {
-			option.classList.remove('selected');
-		});
-
-		// Add 'selected' class to the randomly chosen animation option
-		const selectedOption = document.querySelector(`.animation-option[data-animation="${randomAnimation}"]`);
-		if (selectedOption) {
-			selectedOption.classList.add('selected');
-		}
-
-		return randomAnimation;
-	}
-
-	function getRandomMessage() {
-		return cockyMessages[Math.floor(Math.random() * cockyMessages.length)];
-	}
-
-	function createToast() {
-		// Get style and animation
-		const toastStyle = randomStyleToggle.checked ? getRandomStyle() : selectedStyle;
-		const toastAnimation = randomAnimationToggle.checked ? getRandomAnimation() : selectedAnimation;
-
-		// Get message
-		const messageData = getRandomMessage();
-
-		// Create toast element
-		const toast = document.createElement('div');
-		toast.className = `toast toast-style-${toastStyle} toast-animation-${toastAnimation}-in`;
-
-		// Create toast content
-		toast.innerHTML = `
-                    <div class="toast-icon">${messageData.icon}</div>
-                    <div class="toast-content">
-                        <div class="toast-title">${messageData.title}</div>
-                        <div class="toast-message">${messageData.message}</div>
-                    </div>
-                    <button class="toast-close">&times;</button>
-                    <div class="toast-progress toast-progress-animate"></div>
-                `;
-
-		// Add toast to container
-		toastContainer.appendChild(toast);
-
-		// Set timeout for auto-removal
-		const timeoutId = setTimeout(() => {
-			removeToast(toast, toastAnimation);
-		}, 10000);
-
-		// Add click event for manual close
-		toast.querySelector('.toast-close').addEventListener('click', () => {
-			clearTimeout(timeoutId);
-			removeToast(toast, toastAnimation);
-		});
-	}
-
-	function removeToast(toast, animation) {
-		// Add exit animation
-		toast.className = toast.className.replace(`-in`, `-out`);
-
-		// Remove from DOM after animation
-		toast.addEventListener('animationend', () => {
-			toast.remove();
-		});
-	}
-
-	function clearAllToasts() {
-		const toasts = document.querySelectorAll('.toast');
-		toasts.forEach(toast => {
-			const animation = toast.className.match(/toast-animation-(\d+)/)[1];
-			removeToast(toast, animation);
-		});
-	}
-
-	// Event Listeners
-	createToastBtn.addEventListener('click', createToast);
-	clearToastsBtn.addEventListener('click', clearAllToasts);
-
-	styleOptions.forEach(option => {
-		option.addEventListener('click', () => {
-			selectStyle(option.dataset.style);
-		});
-	});
-
-	animationOptions.forEach(option => {
-		option.addEventListener('click', () => {
-			selectAnimation(option.dataset.animation);
-		});
-	});
-
-	styleOptions.forEach(option => {
-			option.addEventListener('click', () => {
-					// Uncheck the random animation toggle when a style is manually selected
-					randomStyleToggle.checked = false;
-			});
-	});
-	
-	animationOptions.forEach(option => {
-			option.addEventListener('click', () => {
-					// Uncheck the random animation toggle when a style is manually selected
-					randomAnimationToggle.checked = false;
-			});
-	});
-	
-	// Initial setup - create a default toast
-	setTimeout(createToast, 500);
+showForm.addEventListener('click', () => { // Show the task form when the button is clicked
+  taskForm.style.display = 'block';
 });
+
+taskForm.addEventListener('submit', saveTask);
+
+btnCloseForm.addEventListener("click", () => { // Hide the task form when the button is clicked
+    taskForm.style.display = "none";
+});
+
+function saveTask(event){ // Function to save a new task
+    event.preventDefault();
+
+    const taskName = document.querySelector('#taskInput').value;
+    const taskDescription = document.querySelector('#taskDescription').value;
+    const taskDueDate = document.querySelector('#taskDate').value;
+    const taskPriority = document.querySelector('#taskPriority').value;
+
+    const newTask = {  // Create a new task object
+      // Using Date.now() to generate a unique ID for the task
+      id: Date.now(),
+      name: taskName,
+      description: taskDescription,
+      dueDate: taskDueDate,
+      priority: taskPriority,
+      completed: false
+    }
+
+    let arrayTasks;
+
+    if (localStorage.getItem('tasks')){ // Check if there are existing tasks in localStorage
+      arrayTasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+    else{
+      arrayTasks = [];
+    } 
+    
+    arrayTasks.push(newTask);
+    localStorage.setItem('tasks', JSON.stringify(arrayTasks));
+    taskForm.reset();
+    taskForm.style.display = 'none';
+    showTasks();
+}
+
+function showTasks() { // Function to display tasks from localStorage
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  taskList.innerHTML = '';
+
+  if (tasks) {
+    tasks.forEach((task, index) => {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <div class="task ${task.completed ? 'completed' : ''} priority-${task.priority}">
+          <div class="task-header">
+            <span class="task-title">${task.name}</span>
+            <span class="task-priority">${task.priority}</span>
+          </div>
+          ${task.description ? `<p class="task-description">${task.description}</p>` : ''}
+          <div class="task-details">${task.dueDate ? `Fecha: ${task.dueDate}` : ''}</div>
+          <div class="task-actions">
+            <button class="btn-delete" data-id="${task.id}">Eliminar</button>
+            <button class="btn-complete" data-id="${task.id}">${task.completed ? 'Desmarcar' : 'Completar'}</button>
+            <button class="btn-edit" data-id="${task.id}">Editar</button>
+          </div>
+        </div>
+      `;
+      // Ajoute la classe d'animation à la dernière tâche ajoutée
+      if (index === tasks.length - 1) {
+        li.classList.add('task-animate-in');
+      }
+      taskList.appendChild(li);
+    });
+
+    const btnsDelete = document.querySelectorAll(".btn-delete");
+    const btnsComplete = document.querySelectorAll(".btn-complete");
+    const btnsEdit = document.querySelectorAll(".btn-edit");
+
+    btnsDelete.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            deleteTask(e);
+            showCockyMessage(1); // Show message for deletion
+        });
+    });
+
+    btnsComplete.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            completeTask(e);
+            showCockyMessage(0); // Show message for completion
+        });
+    });
+
+    btnsEdit.forEach(btn => {
+        btn.addEventListener("click", editTask);
+    });
+  }
+}
+
+function deleteTask(e) { // Function to delete a task
+    const id = e.target.dataset.id;
+    const arrayTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const updatedTasks = arrayTasks.filter(task => task.id != id);
+    localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+    showTasks();
+}
+
+function editTask(e) { // Function to edit a task
+    const id = e.target.dataset.id;
+    const arrayTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskToEdit = arrayTasks.find(task => task.id == id);
+    
+    if (taskToEdit) {
+        document.querySelector('#taskInput').value = taskToEdit.name;
+        document.querySelector('#taskDescription').value = taskToEdit.description;
+        document.querySelector('#taskDate').value = taskToEdit.dueDate;
+        document.querySelector('#taskPriority').value = taskToEdit.priority;
+        
+        const updatedTasks = arrayTasks.filter(task => task.id != id);
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+        
+        taskForm.style.display = 'block';
+        document.querySelector('#taskInput');
+    }
+}
+
+function completeTask(e) { // Function to mark a task as completed
+    const id = e.target.dataset.id;
+    const arrayTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    const taskToUpdate = arrayTasks.find(task => task.id == id);
+
+    if (taskToUpdate) {
+        taskToUpdate.completed = !taskToUpdate.completed;
+        localStorage.setItem('tasks', JSON.stringify(arrayTasks));
+        showTasks();
+    }
+}
+
+function formatDate(dateString) { // Function to format date
+    if (!dateString) return '';
+    // Format the date to 'dd/mm/yyyy' in Spanish locale
+    // Using 'es-ES' locale for Spanish formatting
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('es-ES', options);
+}
+
+const cockyMessage = [ //
+  {
+    title: "¡Muy bien!",
+    message: "Has completado una tarea. ¡Sigamos adelante!",
+    icon: "✅"
+  },
+  {
+    title: "¡Genial!",
+    message: "Tu tarea ha sido eliminada. ¡A por la siguiente!",
+    icon: "🗑️"
+  }
+];
+function showCockyMessage(type) { // Function to show a toast message
+  const message = cockyMessage[type];
+  if (message) {
+    showToast(`${message.icon} ${message.title}`, message.message);
+  }
+}
+
+function showToast(title, message) { // Function to create and show toast notification
+  // Remove existing toast if any
+  const existingToast = document.querySelector('.toast');
+  if (existingToast) {
+    existingToast.remove();
+  }
+
+  // Create toast element
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.innerHTML = `
+    <div class="toast-content">
+      <div class="toast-title">${title}</div>
+      <div class="toast-message">${message}</div>
+    </div>
+    <button class="toast-close">&times;</button>
+  `;
+
+  // Add toast to body
+  document.body.appendChild(toast);
+
+  // Add close functionality
+  const closeBtn = toast.querySelector('.toast-close');
+  closeBtn.addEventListener('click', () => {
+    toast.remove();
+  });
+
+  // Auto remove after 3 seconds
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.remove();
+    }
+  }, 5000);
+
+  // Show toast with animation
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);//
+}
+
+function checkTaskReminder() {
+  const currentDate = new Date();
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+  tasks.forEach(task => {
+    if (!task.dueDate || task.completed) return;
+    const dueDate = new Date(task.dueDate);
+    // Calculer la différence en jours
+    const diffTime = dueDate.setHours(0,0,0,0) - currentDate.setHours(0,0,0,0);
+    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
+    if (diffDays === 1) {
+      showToast("⏰ Recordatorio", `La tarea "${task.name}" es para mañana.`);
+    }
+    // Optionnel : garder le rappel existant pour les tâches en retard
+    if (diffDays < 0) {
+      showToast(`⚠️ Retrasado : ${task.name}`, `La tarea "${task.name}" está retrasada.`);
+    }
+  });
+}
+setInterval(checkTaskReminder, 60 * 1000); // Vérifie toutes les minutes
+
+

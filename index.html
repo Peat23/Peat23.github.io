@@ -1,68 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Gestor Personal de Tareas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Hola mundo</h1>
+    <div class="container">
+    <!-- <h1>Task Tareas</h1> -->
+    <button id="showForm"> + Añdir tarea</button>
+    <div class="controls">
+      <form id="taskForm">
+        <i class="fa-solid fa-xmark" id="closeForm"></i>
+        <input type="text" id="taskInput" placeholder="Titre de la tâche..." required>
+        <textarea id="taskDescription" placeholder="Description..."></textarea>
+        <input type="date" id="taskDate">
+        <select class="priority-select" id="taskPriority" required>
+          <option value="" selected>Seleccionar Prioridad</option>
+          <option value="low">low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+        <button type="submit"><i class="fas fa-plus"></i>Guardar</button>
+      </form>
+    </div>
+    
+    <div id="taskList"></div>
 
-    <h1>Cocky Toast Notifications</h1>
+    <div class="options-grid">
+      <div class="option-btn animation-option selected" data-animation="1"></div>
+    </div>
+    
+   
 
-<div class="control-panel">
-	<h2>Control Panel</h2>
-
-	<div class="control-panel-grid">
-		<div class="selection-group">
-			<h3>Style</h3>
-			<div class="options-grid">
-				<div class="option-btn style-option selected" data-style="1">Sass Master</div>
-				<div class="option-btn style-option" data-style="2">Blue Steel</div>
-				<div class="option-btn style-option" data-style="3">Toxic Green</div>
-				<div class="option-btn style-option" data-style="4">Dark Mode</div>
-				<div class="option-btn style-option" data-style="5">Royal Purple</div>
-				<div class="option-btn style-option" data-style="6">Sunset Orange</div>
-				<div class="option-btn style-option" data-style="7">Cyber Pink</div>
-				<div class="option-btn style-option" data-style="8">Business Gray</div>
-				<div class="option-btn style-option" data-style="9">Teal Deal</div>
-				<div class="option-btn style-option" data-style="10">Gradient Glory</div>
-			</div>
-			<div class="random-toggle">
-				<input type="checkbox" id="random-style" checked>
-				<label for="random-style">Randomize Style</label>
-			</div>
-		</div>
-
-		<div class="selection-group">
-			<h3>Animation</h3>
-			<div class="options-grid">
-				<div class="option-btn animation-option selected" data-animation="1">Slide Right</div>
-				<div class="option-btn animation-option" data-animation="2">Fade</div>
-				<div class="option-btn animation-option" data-animation="3">Bounce</div>
-				<div class="option-btn animation-option" data-animation="4">Slide Top</div>
-				<div class="option-btn animation-option" data-animation="5">Flip</div>
-				<div class="option-btn animation-option" data-animation="6">Zoom</div>
-				<div class="option-btn animation-option" data-animation="7">Slide Left</div>
-				<div class="option-btn animation-option" data-animation="8">Rotate</div>
-				<div class="option-btn animation-option" data-animation="9">Jello</div>
-				<div class="option-btn animation-option" data-animation="10">Swing</div>
-			</div>
-			<div class="random-toggle">
-				<input type="checkbox" id="random-animation" checked>
-				<label for="random-animation">Randomize Animation</label>
-			</div>
-		</div>
-	</div>
-
-	<div class="action-buttons">
-		<button class="action-btn create-btn" id="create-toast">Create Toast</button>
-		<button class="action-btn clear-btn" id="clear-toasts">Clear All</button>
-	</div>
-</div>
-
-<div class="toast-container" id="toast-container"></div>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
